@@ -12,7 +12,7 @@ const Main = (props) => {
                         id={id}
                         key={id}
                         className={classes.rect}
-                        style={{ top: i * 60, left: j * 60, backgroundColor: item ? '#8B8989' : '#FFFF00' }}
+                        style={{ top: i * 60, left: j * 60, backgroundColor: item ? '#FFFF00' : '#8B8989' }}
                         onClick={props.clickLight.bind(this, id)}>
                     </div>
                 })
