@@ -38,10 +38,10 @@ class ControlPanel extends Component {
                 </div>
                 <button onClick={() => {this.props.submit(this.getInputData())}}>提交</button>
                 <button onClick={this.props.clickFirstStep}>第一步</button>
-                <button onClick={this.props.clickLastStep}>上一步</button>
+                <button onClick={this.props.clickPrevStep}>上一步</button>
                 <button onClick={this.props.clickNextStep}>下一步</button>
                 <button onClick={this.props.clickFinalStep}>最后一步</button>
-                <button>答案</button>
+                <button onClick={this.props.getAnswer}>答案</button>
             </Wrapper>
 
         )
