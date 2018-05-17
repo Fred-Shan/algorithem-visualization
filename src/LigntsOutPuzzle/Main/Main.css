@@ -8,8 +8,40 @@
 }
 
 .container {
-    margin: 20vh auto;
+    margin: 10vh auto 0 auto;
     width: 50%;
     height: 50%;
     position: relative;
 }
+
+.answer {
+    width: 10px;
+    height: 10px;
+    margin: 25px auto;
+    background-color: red;
+    border-radius: 5px;
+    -webkit-animation: twinkling 1s infinite 0.5s ease-in-out alternate;
+    animation: twinkling 1s infinite 0.5s ease-in-out alternate;
+}
+
+/* .answer {
+    -webkit-animation: twinkling 1s infinite 0.5s ease-in-out alternate;
+    animation: twinkling 2s infinite 0.9s ease-in-out alternate;
+} */
+
+@-webkit-keyframes twinkling{   /*用于Chrome和Safari*/  
+    0%{ 
+        opacity:1;                /*透明度为0*/  
+    }  
+    100%{  
+        opacity:0;              /*透明度为1*/  
+    }  
+}  
+@keyframes twinkling{   /*用于IE，Firefox和Opera*/  
+    0%{  
+        opacity:1;                /*透明度为0*/  
+    }  
+    100%{  
+        opacity:0;              /*透明度为1*/  
+    }  
+}  
