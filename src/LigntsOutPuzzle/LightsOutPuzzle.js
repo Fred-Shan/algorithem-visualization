@@ -11,7 +11,7 @@ class LightsOutPuzzle extends Component {
     state = {
         currentStatePointer: null,
         answer: [],
-        mode: 0  //0：无法点击；1：随意点击；2：只能点击答案
+        mode: null  //0：自己出题；1：动手试一试；2：跪求答案；3：随机来一题
     }
 
     lightsStateHistory = [];
@@ -49,7 +49,7 @@ class LightsOutPuzzle extends Component {
     }
 
     clickLight = (id, canBeClicked) => {
-        if (this.state.mode === 0) {
+        if (this.state.mode === 0 || this.state.mode === 3) {
             return;
         } else {
             if (this.state.currentStatePointer < this.lightsStateHistory.length - 1) {
@@ -144,38 +144,42 @@ class LightsOutPuzzle extends Component {
     }
 
     getAnswer = () => {
-        let base = Math.pow(2, this.columnNum);
-        let solution = [];
-        for (let counter = 0; counter < base; counter++) {
-            const initLightsState = JSON.parse(JSON.stringify(this.lightsStateHistory[0]));
-            const clicksOnFirstRow = ((base + counter).toString(2)).slice(1);
-            for (let i = 0; i < clicksOnFirstRow.length; i++) {
-                if (clicksOnFirstRow[i] === '1') {
-                    this.changeLightState(0, i, initLightsState);
-                    this.changeLightState(0, i - 1, initLightsState);
-                    this.changeLightState(0, i + 1, initLightsState);
-                    this.changeLightState(1, i, initLightsState);
-                    solution.push([0, i]);
+        if (this.state.currentStatePointer !== null) {
+            let base = Math.pow(2, this.columnNum);
+            let solution = [];
+            for (let counter = 0; counter < base; counter++) {
+                const initLightsState = JSON.parse(JSON.stringify(this.lightsStateHistory[0]));
+                const clicksOnFirstRow = ((base + counter).toString(2)).slice(1);
+                for (let i = 0; i < clicksOnFirstRow.length; i++) {
+                    if (clicksOnFirstRow[i] === '1') {
+                        this.changeLightState(0, i, initLightsState);
+                        this.changeLightState(0, i - 1, initLightsState);
+                        this.changeLightState(0, i + 1, initLightsState);
+                        this.changeLightState(1, i, initLightsState);
+                        solution.push([0, i]);
+                    }
+                }
+                const finalLightsState = this.clickRemainingRows(1, initLightsState, solution);
+                const criterion = finalLightsState[this.rowNum - 1].reduce((total, item) => total + item, 0);
+                if (criterion === 0) {
+                    const lightsState = this.lightsStateHistory[0];
+                    this.lightsStateHistory = [];
+                    this.lightsStateHistory.push(lightsState);
+                    this.setState({ currentStatePointer: 0, answer: solution, mode: 2 });
+                    return;
+                } else {
+                    solution = [];
                 }
             }
-            const finalLightsState = this.clickRemainingRows(1, initLightsState, solution);
-            const criterion = finalLightsState[this.rowNum - 1].reduce((total, item) => total + item, 0);
-            if (criterion === 0) {
-                const lightsState = this.lightsStateHistory[0];
-                this.lightsStateHistory = [];
-                this.lightsStateHistory.push(lightsState);
-                this.setState({ currentStatePointer: 0, answer: solution, mode: 2 });
-                return;
-            } else {
-                solution = [];
-            }
+            alert("该题没有答案")
+            const lightsState = this.lightsStateHistory[0];
+            this.lightsStateHistory = [];
+            this.lightsStateHistory.push(lightsState);
+            this.setState({ currentStatePointer: 0, answer: solution, mode: 2 });
+            return;
+        } else {
+            alert("请先出题");
         }
-        alert("该题没有答案")
-        const lightsState = this.lightsStateHistory[0];
-        this.lightsStateHistory = [];
-        this.lightsStateHistory.push(lightsState);
-        this.setState({ currentStatePointer: 0, answer: solution, mode: 2 });
-        return;
     }
 
     clickRemainingRows = (startRowIndex, initLightsState, solution) => {
@@ -197,10 +201,15 @@ class LightsOutPuzzle extends Component {
     }
 
     clickTry = () => {
-        const lightsState = this.lightsStateHistory[0];
-        this.lightsStateHistory = [];
-        this.lightsStateHistory.push(lightsState);
-        this.setState({ currentStatePointer: 0, answer: [], mode: 1 });
+        if (this.state.currentStatePointer !== null) {
+            const lightsState = this.lightsStateHistory[0];
+            this.lightsStateHistory = [];
+            this.lightsStateHistory.push(lightsState);
+            this.setState({ currentStatePointer: 0, answer: [], mode: 1 });
+        } else {
+            alert("请先出题");
+        }
+
     }
 
     generatePuzzle = () => {
@@ -225,7 +234,12 @@ class LightsOutPuzzle extends Component {
         }//随机点击10个灯
         this.lightsStateHistory = [];
         this.lightsStateHistory.push(initLightsState);
-        this.setState({ currentStatePointer: 0, answer: [], mode: 0 })
+        this.setState({ currentStatePointer: 0, answer: [], mode: 3 });
+    }
+
+    puzzleMyself = () => {
+        this.lightsStateHistory = [];
+        this.setState({ currentStatePointer: null, answer: [], mode: 0 });
     }
 
     render() {
@@ -236,11 +250,8 @@ class LightsOutPuzzle extends Component {
                 <SideBar>
                     <ControlPanel
                         submit={this.initLightsState}
-                        clickPrevStep={this.toPrevStep}
-                        clickNextStep={this.toNextStep}
-                        clickFirstStep={this.toFirstStep}
-                        clickFinalStep={this.toFinalStep}
-                        clickTry={this.clickTry}
+                        haveATry={this.clickTry}
+                        puzzleMyself={this.puzzleMyself}
                         getAnswer={this.getAnswer}
                         mode={this.state.mode}
                         generatePuzzle={this.generatePuzzle}></ControlPanel>
@@ -251,7 +262,11 @@ class LightsOutPuzzle extends Component {
                         lightsState={lightsStateCopy}
                         clickLight={this.clickLight}
                         answer={this.state.answer}
-                        mode={this.state.mode}>
+                        mode={this.state.mode}
+                        clickPrevStep={this.toPrevStep}
+                        clickNextStep={this.toNextStep}
+                        clickFirstStep={this.toFirstStep}
+                        clickFinalStep={this.toFinalStep}>
                     </Main>
                 </MainContent>
             </Wrapper>

@@ -4,9 +4,7 @@ import classes from './TopBar.css';
 
 const Topbar = (props) => {
     return (
-        <header className={classes.header}>
-            <div className={classes.item}>Lights Out Puzzle</div>
-        </header>
+        <header className={classes.header}>熄灯问题</header>
     );
 }
 

@@ -1,6 +1,6 @@
 .sidebar {
-    border-right: 1px solid #000;
     width: 20vw;
-    height: 90vh;
     float: left;
+    margin-bottom: -3000px;
+    padding-bottom: 3000px;
 }
