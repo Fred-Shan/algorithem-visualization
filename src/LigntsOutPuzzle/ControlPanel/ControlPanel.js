@@ -23,7 +23,7 @@ class ControlPanel extends Component {
         //     lightsState: this.lightsStateInput.value
         // };
         let subPanel0 = null,
-            subPanel3 = null;            
+            subPanel3 = null;
         if (this.props.mode === 0) {
             subPanel0 = (
                 <Wrapper>
@@ -39,6 +39,7 @@ class ControlPanel extends Component {
                     <div className={classes.inputElement}>
                         <span className={classes.label}>灯的初始状态</span>
                         <textarea className={classes.input} rows="10" ref={(inp) => { this.lightsStateInput = inp }}></textarea>
+                        <p className={classes.hint}>示例：3行4列可输入1001 0100 1001。其中1代表点亮，0代表熄灭。</p>
                     </div>
                     <div className={classes.inputElement}>
                         <input
@@ -50,7 +51,7 @@ class ControlPanel extends Component {
                 </Wrapper>
             )
         }
-        
+
         if (this.props.mode === 3) {
             subPanel3 = (
                 <Wrapper>
