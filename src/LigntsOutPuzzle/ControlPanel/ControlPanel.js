@@ -52,7 +52,7 @@ class ControlPanel extends Component {
             )
         }
 
-        if (this.props.mode === 3) {
+        if (this.props.mode === 3 || this.props.mode === 1) {
             subPanel3 = (
                 <Wrapper>
                     <div className={classes.seperator}></div>
