@@ -24,20 +24,74 @@
 }
 
 .card {
-    border: 1px solid #000;
-    width: 100px;
     text-align: center;
-    padding: 5px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    
+}
+
+.linkBtn {
+    text-decoration: none;
+    background-color: #fff;
+    padding: 1rem 2rem;
+    font-size: 2rem;
+    border-radius: 100px;
+    display: block;
+    position: relative;
+    animation: moveInBottom 1s ease-out .5s;
+    animation-fill-mode: backwards;
+    transition: all .2s;
+}
+
+.linkBtn::after {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+}
+
+.linkBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba(77, 77, 82, 0.3);
+}
+
+.linkBtn:hover::after {
+    transform: scale(1.5);
+    opacity: 0;
+}
+
+
+
+.linkBtn:active {
+    color: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 .5rem 1rem rgba(77, 77, 82, 0.3);
 }
 
 @keyframes moveInTop {
     0% {
         opacity: 0;
         transform: translateY(-5rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(5rem);
     }
     100% {
         opacity: 1;
