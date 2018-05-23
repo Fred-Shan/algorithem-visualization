@@ -1,8 +1,8 @@
 {
-  "name": "algorithem-visualization",
+  "name": "algorithm-visualization",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Fred-Shan.github.io/algorithem-visualization",
+  "homepage": "https://Fred-Shan.github.io/algorithm-visualization",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
