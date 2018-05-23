@@ -1,0 +1,46 @@
+.home {
+    height: 92vh;
+    background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url(../img/algorithm.jpeg);
+    background-size: 100% 100%;
+    background-position: top;
+    margin: 4vh;
+    position: relative;
+}
+
+.title {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 8rem;
+    text-transform: uppercase;
+    letter-spacing: 3.5rem;
+    animation: moveInTop 1s ease-out;
+}
+
+.card {
+    border: 1px solid #000;
+    width: 100px;
+    text-align: center;
+    padding: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes moveInTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-5rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
